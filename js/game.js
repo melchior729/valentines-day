@@ -110,8 +110,14 @@ function gameLoop() {
                 updateCounter();
                 GameState.hearts.splice(i, 1);
                 
-                // Play collect sound (mobile-friendly cloning method)
-                playCollectSound();
+                // Play collect sound - simple and reliable
+                try {
+                    const collectAudio = new Audio('audio/collect.mp3');
+                    collectAudio.volume = 0.5;
+                    collectAudio.play();
+                } catch (e) {
+                    // Silently ignore if audio fails
+                }
             } else if (heart.isOffScreen()) {
                 GameState.hearts.splice(i, 1);
             }

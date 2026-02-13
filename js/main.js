@@ -29,20 +29,6 @@ penguinImages.bored.src = 'imgs/penguin-bored.png';
 // Audio management
 const gameplayMusic = document.getElementById('gameplayMusic');
 const celebrationMusic = document.getElementById('celebrationMusic');
-const collectSound = document.getElementById('collectSound');
-
-// Simple flag to prevent audio lag on mobile
-let canPlayCollectSound = true;
-
-// Play collect sound with throttling to prevent lag
-function playCollectSound() {
-    if (collectSound && canPlayCollectSound) {
-        // Clone the audio node for simultaneous playback without lag
-        const sound = collectSound.cloneNode();
-        sound.volume = 0.6;
-        sound.play().catch(() => {}); // Silently fail if blocked
-    }
-}
 
 // Track penguin state on question screen
 let penguinIsAngry = false;
