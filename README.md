@@ -1,6 +1,6 @@
 # Valentine's Day Penguin Game 🐧💕
 
-An interactive Valentine's Day website with a cute penguin character and heart-catching game!
+An interactive Valentine's Day website with a cute penguin character and heart-catching game.
 
 ## Project Structure
 
@@ -97,5 +97,3 @@ Edit `js/game.js`:
 - **game.js**: Canvas rendering, collision detection, game loop
 - **results.js**: Score calculation, feedback messages, celebration effects
 - **controls.js**: Touch/mouse/keyboard event handlers
-
-Enjoy! 💖
