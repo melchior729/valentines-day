@@ -22,7 +22,15 @@ function showResults() {
         resultsMessage.textContent = 'Absolutely incredible! You caught every single heart! You\'re a true champion!';
         resultsButton.textContent = 'Continue';
         resultsButton.className = 'btn btn-primary';
-        resultsButton.onclick = () => showScreen('question');
+        resultsButton.onclick = () => {
+            // Reset penguin to questioning state when going to question screen
+            penguinIsAngry = false;
+            const questionPenguin = document.getElementById('penguinQuestion');
+            if (questionPenguin) {
+                questionPenguin.src = 'imgs/penguin-questioning.png';
+            }
+            showScreen('question');
+        };
     } else if (percentage >= 75) {
         // Good score - pleasant/happy
         resultsPenguin.className = 'penguin happy';
@@ -32,7 +40,15 @@ function showResults() {
         resultsMessage.textContent = 'Great job! You caught enough hearts to make the penguin happy!';
         resultsButton.textContent = 'Continue';
         resultsButton.className = 'btn btn-primary';
-        resultsButton.onclick = () => showScreen('question');
+        resultsButton.onclick = () => {
+            // Reset penguin to questioning state when going to question screen
+            penguinIsAngry = false;
+            const questionPenguin = document.getElementById('penguinQuestion');
+            if (questionPenguin) {
+                questionPenguin.src = 'imgs/penguin-questioning.png';
+            }
+            showScreen('question');
+        };
     } else if (percentage >= 50) {
         // Mid score - bored
         resultsPenguin.className = 'penguin bored';
@@ -69,12 +85,6 @@ function showResults() {
 // ========== Celebration Logic ==========
 function startCelebration() {
     showScreen('celebration');
-    
-    // Hide the scary penguin if it's visible
-    const scaryPenguin = document.getElementById('scaryPenguin');
-    if (scaryPenguin) {
-        scaryPenguin.style.display = 'none';
-    }
     
     // Stop gameplay music if it's still playing
     if (gameplayMusic) {

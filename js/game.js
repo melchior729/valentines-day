@@ -18,8 +18,8 @@ class Heart {
         this.height = 30;
         this.x = Math.random() * (canvas.width - this.width);
         this.y = -this.height;
-        // Reduced speed by 30%: was 2 + Math.random() * 1
-        this.speed = 1.4 + Math.random() * 0.7;
+        // Back to original speed
+        this.speed = 2 + Math.random() * 1;
         this.caught = false;
     }
     
@@ -50,9 +50,8 @@ function startGame() {
     document.getElementById('gameControls').classList.add('active');
     document.getElementById('gameCounter').classList.add('active');
     
-    // Start gameplay music
-    if (gameplayMusic) {
-        gameplayMusic.currentTime = 0;
+    // Make sure gameplay music is playing (in case it was paused)
+    if (gameplayMusic && gameplayMusic.paused) {
         gameplayMusic.play().catch(err => {
             console.log('Gameplay music play failed:', err);
         });
@@ -190,7 +189,7 @@ function endGame() {
     cancelAnimationFrame(animationId);
     
     // Keep gameplay music playing (continues into results screen)
-    // Will only stop when celebration starts
+    // Will only stop when celebration starts or No is pressed
     
     // Clear any active movement intervals
     clearInterval(moveLeftInterval);

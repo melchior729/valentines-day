@@ -30,8 +30,8 @@ penguinImages.bored.src = 'imgs/penguin-bored.png';
 const gameplayMusic = document.getElementById('gameplayMusic');
 const celebrationMusic = document.getElementById('celebrationMusic');
 
-// Track if scary penguin has been shown
-let scaryPenguinShown = false;
+// Track penguin state on question screen
+let penguinIsAngry = false;
 
 // ========== Screen Management ==========
 function showScreen(screenId) {
@@ -71,11 +71,6 @@ function createSnowflakes() {
 
 // ========== Countdown Logic ==========
 function startCountdown() {
-    // FOR TESTING: Skip countdown
-    startGame();
-    return;
-    
-    /* Original countdown code - uncomment when ready to use
     showScreen('countdown');
     let count = 5;
     const countdownNumber = document.getElementById('countdownNumber');
@@ -97,10 +92,16 @@ function startCountdown() {
             }, 1000);
         }
     }, 1000);
-    */
 }
 
 // ========== Initialize ==========
 document.addEventListener('DOMContentLoaded', () => {
     createSnowflakes();
+    
+    // Start gameplay music from the very beginning
+    if (gameplayMusic) {
+        gameplayMusic.play().catch(err => {
+            console.log('Music autoplay may require user interaction:', err);
+        });
+    }
 });
