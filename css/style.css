@@ -117,6 +117,8 @@ body {
     width: 180px;
     height: 180px;
     margin-bottom: var(--spacing-md);
+    margin-left: auto;
+    margin-right: auto;
     transition: transform var(--transition-normal), filter var(--transition-normal);
     user-select: none;
     display: flex;
@@ -128,6 +130,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    display: block;
 }
 
 .penguin.sad {
@@ -250,11 +253,10 @@ p {
 /* ========== Game Controls ========== */
 .game-controls {
     position: fixed;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 10%;
+    bottom: 30px;
     display: none;
-    flex-direction: column;
+    flex-direction: row;
     gap: var(--spacing-sm);
     z-index: 100;
 }

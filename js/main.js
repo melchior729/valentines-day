@@ -26,6 +26,13 @@ penguinImages.left.src = 'imgs/penguin-looking-left.png';
 penguinImages.right.src = 'imgs/penguin-looking-right.png';
 penguinImages.bored.src = 'imgs/penguin-bored.png';
 
+// Audio management
+const gameplayMusic = document.getElementById('gameplayMusic');
+const celebrationMusic = document.getElementById('celebrationMusic');
+
+// Track if scary penguin has been shown
+let scaryPenguinShown = false;
+
 // ========== Screen Management ==========
 function showScreen(screenId) {
     // Clear any active movement intervals when switching screens

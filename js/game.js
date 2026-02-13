@@ -50,6 +50,14 @@ function startGame() {
     document.getElementById('gameControls').classList.add('active');
     document.getElementById('gameCounter').classList.add('active');
     
+    // Start gameplay music
+    if (gameplayMusic) {
+        gameplayMusic.currentTime = 0;
+        gameplayMusic.play().catch(err => {
+            console.log('Gameplay music play failed:', err);
+        });
+    }
+    
     // Clear any existing movement intervals to prevent momentum bug
     clearInterval(moveLeftInterval);
     clearInterval(moveRightInterval);
@@ -180,6 +188,9 @@ function endGame() {
     GameState.gameActive = false;
     GameState.penguinDirection = 'idle';
     cancelAnimationFrame(animationId);
+    
+    // Keep gameplay music playing (continues into results screen)
+    // Will only stop when celebration starts
     
     // Clear any active movement intervals
     clearInterval(moveLeftInterval);

@@ -69,16 +69,29 @@ function showResults() {
 // ========== Celebration Logic ==========
 function startCelebration() {
     showScreen('celebration');
-    createFloatingHearts();
-    createConfetti();
     
-    // Play celebration music
-    const audio = document.getElementById('celebrationMusic');
-    if (audio && audio.querySelector('source')) {
-        audio.play().catch(err => {
-            console.log('Audio play failed (user interaction may be required):', err);
+    // Hide the scary penguin if it's visible
+    const scaryPenguin = document.getElementById('scaryPenguin');
+    if (scaryPenguin) {
+        scaryPenguin.style.display = 'none';
+    }
+    
+    // Stop gameplay music if it's still playing
+    if (gameplayMusic) {
+        gameplayMusic.pause();
+        gameplayMusic.currentTime = 0;
+    }
+    
+    // Play celebration music (no loop) - fanfare!
+    if (celebrationMusic) {
+        celebrationMusic.currentTime = 0;
+        celebrationMusic.play().catch(err => {
+            console.log('Celebration music play failed:', err);
         });
     }
+    
+    createFloatingHearts();
+    createConfetti();
 }
 
 function createFloatingHearts() {

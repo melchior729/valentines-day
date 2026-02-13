@@ -120,3 +120,49 @@ document.addEventListener('keyup', (e) => {
 // ========== Button Event Listeners ==========
 document.getElementById('btnPlay').addEventListener('click', startCountdown);
 document.getElementById('btnYes').addEventListener('click', startCelebration);
+
+// Play Again button - restart from beginning
+document.getElementById('btnPlayAgain').addEventListener('click', () => {
+    // Stop celebration music
+    if (celebrationMusic) {
+        celebrationMusic.pause();
+        celebrationMusic.currentTime = 0;
+    }
+    
+    // Reset scary penguin flag
+    scaryPenguinShown = false;
+    
+    // Hide scary penguin if visible
+    const scaryPenguin = document.getElementById('scaryPenguin');
+    if (scaryPenguin) {
+        scaryPenguin.style.display = 'none';
+        scaryPenguin.style.bottom = '-200px';
+    }
+    
+    // Go back to intro screen
+    showScreen('intro');
+});
+
+// No button - scary penguin effect
+document.getElementById('btnNo').addEventListener('click', () => {
+    // Cut the music immediately for scary effect
+    if (gameplayMusic) {
+        gameplayMusic.pause();
+        gameplayMusic.currentTime = 0;
+    }
+    
+    if (!scaryPenguinShown) {
+        // First time - show scary penguin rising from below
+        const scaryPenguin = document.getElementById('scaryPenguin');
+        scaryPenguin.style.display = 'block';
+        
+        // Wait a moment then animate up
+        setTimeout(() => {
+            scaryPenguin.style.bottom = '20px';
+        }, 10);
+        
+        scaryPenguinShown = true;
+    }
+    // After first time, penguin stays visible but nothing happens
+    // User must press Yes
+});
