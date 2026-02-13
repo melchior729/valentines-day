@@ -31,29 +31,17 @@ const gameplayMusic = document.getElementById('gameplayMusic');
 const celebrationMusic = document.getElementById('celebrationMusic');
 const collectSound = document.getElementById('collectSound');
 
-// Audio pool for collect sound to prevent lag on mobile
-const collectSoundPool = [];
-const POOL_SIZE = 5;
-let currentPoolIndex = 0;
+// Simple flag to prevent audio lag on mobile
+let canPlayCollectSound = true;
 
-// Create audio pool for collect sounds
-function initializeAudioPool() {
-    for (let i = 0; i < POOL_SIZE; i++) {
-        const audio = new Audio('audio/collect.mp3');
-        audio.preload = 'auto';
-        audio.volume = 0.5; // Slightly lower volume so it doesn't overpower
-        collectSoundPool.push(audio);
-    }
-}
-
-// Play collect sound from pool (no lag)
+// Play collect sound with throttling to prevent lag
 function playCollectSound() {
-    const sound = collectSoundPool[currentPoolIndex];
-    if (sound && sound.readyState >= 2) { // Check if loaded
-        sound.currentTime = 0;
-        sound.play().catch(() => {}); // Silently fail if error
+    if (collectSound && canPlayCollectSound) {
+        // Clone the audio node for simultaneous playback without lag
+        const sound = collectSound.cloneNode();
+        sound.volume = 0.6;
+        sound.play().catch(() => {}); // Silently fail if blocked
     }
-    currentPoolIndex = (currentPoolIndex + 1) % POOL_SIZE; // Rotate through pool
 }
 
 // Track penguin state on question screen
@@ -132,7 +120,6 @@ function startCountdown() {
 // ========== Initialize ==========
 document.addEventListener('DOMContentLoaded', () => {
     createSnowflakes();
-    initializeAudioPool(); // Initialize sound pool for better performance
     
     // Try to start gameplay music from the very beginning
     if (gameplayMusic) {

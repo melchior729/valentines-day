@@ -110,7 +110,7 @@ function gameLoop() {
                 updateCounter();
                 GameState.hearts.splice(i, 1);
                 
-                // Play collect sound from pool (optimized for mobile)
+                // Play collect sound (mobile-friendly cloning method)
                 playCollectSound();
             } else if (heart.isOffScreen()) {
                 GameState.hearts.splice(i, 1);
