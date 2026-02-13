@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Be My Valentine? 💝</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========== CSS Variables ========== */
+        :root {
+            /* Antarctic Color Palette */
+            --color-snow: #FFFFFF;
+            --color-ice-light: #E0F7FF;
+            --color-ice-blue: #B4D7E8;
+            --color-ice-medium: #6CB4E8;
+            --color-ice-dark: #4A90C7;
+            --color-pink-light: #FFB6D9;
+            --color-pink: #FF85B3;
+            --color-pink-dark: #FF1493;
+            --color-text: #2C3E50;
+            --color-text-light: #5A6C7D;
+            
+            /* Typography */
+            --font-heading: 'Pacifico', cursive;
+            --font-body: 'Nunito', sans-serif;
+            
+            /* Spacing */
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            
+            /* Transitions */
+            --transition-fast: 0.3s ease;
+            --transition-normal: 0.5s ease;
+            --transition-slow: 0.8s ease;
+        }
+        
+        /* ========== Global Styles ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: linear-gradient(180deg, var(--color-ice-light) 0%, var(--color-snow) 100%);
+            overflow: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Snowflake Background Animation */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: var(--color-ice-blue);
+            font-size: 1em;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        /* ========== Screen Container ========== */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-normal), visibility var(--transition-normal);
+            z-index: 10;
+        }
+        
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* ========== Penguin Character ========== */
+        .penguin {
+            font-size: 120px;
+            margin-bottom: var(--spacing-md);
+            transition: transform var(--transition-normal), filter var(--transition-normal);
+            user-select: none;
+        }
+        
+        .penguin.sad {
+            filter: grayscale(0.5) brightness(0.8);
+            animation: breathe 3s ease-in-out infinite;
+        }
+        
+        .penguin.happy {
+            filter: brightness(1.1);
+            animation: breathe 2s ease-in-out infinite;
+        }
+        
+        .penguin.overjoyed {
+            animation: bounce 0.6s ease-in-out infinite;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* ========== Typography ========== */
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--color-pink-dark);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+        }
+        
+        h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--color-ice-dark);
+            margin-bottom: var(--spacing-sm);
+            text-align: center;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: var(--spacing-sm);
+            max-width: 500px;
+            line-height: 1.8;
+        }
+        
+        /* ========== Buttons ========== */
+        .btn {
+            font-family: var(--font-body);
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 16px 48px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            min-width: 200px;
+            margin: var(--spacing-xs);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-pink) 0%, var(--color-pink-dark) 100%);
+            color: white;
+        }
+        
+        .btn-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--color-ice-medium) 0%, var(--color-ice-dark) 100%);
+            color: white;
+        }
+        
+        .btn-secondary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* ========== Game Controls ========== */
+        .game-controls {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            z-index: 100;
+        }
+        
+        .game-controls.active {
+            display: flex;
+        }
+        
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-pink-light) 0%, var(--color-pink) 100%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all var(--transition-fast);
+            user-select: none;
+        }
+        
+        .control-btn:active {
+            transform: scale(0.9);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* ========== Game Canvas ========== */
+        #gameCanvas {
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            max-width: 100%;
+            max-height: 70vh;
+        }
+        
+        .game-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-pink-dark);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 24px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            display: none;
+        }
+        
+        .game-counter.active {
+            display: block;
+        }
+        
+        /* ========== Countdown Screen ========== */
+        .countdown-number {
+            font-family: var(--font-heading);
+            font-size: 8rem;
+            color: var(--color-pink-dark);
+            animation: countdownPulse 1s ease-in-out;
+        }
+        
+        @keyframes countdownPulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* ========== Results Screen ========== */
+        .results-container {
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .score-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-pink-dark);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .message-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: var(--spacing-md);
+            border-radius: 20px;
+            margin: var(--spacing-md) 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* ========== Question Screen ========== */
+        .question-container {
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .valentine-question {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            color: var(--color-pink-dark);
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            margin: var(--spacing-lg) 0;
+            border: 4px solid var(--color-pink);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* ========== Celebration Screen ========== */
+        .celebration-container {
+            text-align: center;
+            position: relative;
+        }
+        
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp 3s ease-in forwards;
+            opacity: 0;
+        }
+        
+        @keyframes floatUp {
+            0% { 
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--color-pink);
+            top: -10px;
+            animation: confettiFall 3s linear forwards;
+        }
+        
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* ========== Responsive Design ========== */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            p { font-size: 1rem; }
+            .penguin { font-size: 80px; }
+            .countdown-number { font-size: 6rem; }
+            .valentine-question { font-size: 1.8rem; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            .penguin { font-size: 60px; }
+            .countdown-number { font-size: 4rem; }
+            .btn { 
+                font-size: 1rem;
+                padding: 14px 32px;
+                min-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Snowflake Background -->
+    <div class="snowflakes" id="snowflakes"></div>
+    
+    <!-- Game Controls (Right Side) -->
+    <div class="game-controls" id="gameControls">
+        <button class="control-btn" id="btnRight" aria-label="Move Right">→</button>
+        <button class="control-btn" id="btnLeft" aria-label="Move Left">←</button>
+    </div>
+    
+    <!-- Game Counter -->
+    <div class="game-counter" id="gameCounter">0 / 20</div>
+    
+    <!-- Screen 1: Intro -->
+    <div class="screen active" id="introScreen">
+        <div class="penguin sad">🐧</div>
+        <h1>A Lonely Penguin...</h1>
+        <p>Our little penguin friend is feeling blue in Antarctica. Can you help cheer them up by catching hearts?</p>
+        <p style="font-size: 0.95rem; color: var(--color-text-light); margin-top: var(--spacing-md);">
+            <strong>How to Play:</strong><br>
+            Use the arrow buttons on the right to move the penguin left and right.<br>
+            Catch the falling hearts to fill their heart with joy!
+        </p>
+        <button class="btn btn-primary" id="btnPlay">Play</button>
+    </div>
+    
+    <!-- Screen 2: Countdown -->
+    <div class="screen" id="countdownScreen">
+        <div class="countdown-number" id="countdownNumber">5</div>
+    </div>
+    
+    <!-- Screen 3: Game -->
+    <div class="screen" id="gameScreen">
+        <canvas id="gameCanvas" width="400" height="600"></canvas>
+    </div>
+    
+    <!-- Screen 4: Results -->
+    <div class="screen" id="resultsScreen">
+        <div class="results-container">
+            <div class="penguin" id="resultsPenguin">🐧</div>
+            <h2 id="resultsTitle">Results</h2>
+            <div class="score-display" id="scoreDisplay">0 / 20</div>
+            <div class="message-box">
+                <p id="resultsMessage" style="font-size: 1.3rem; font-weight: 600;"></p>
+            </div>
+            <button class="btn" id="resultsButton"></button>
+        </div>
+    </div>
+    
+    <!-- Screen 5: Valentine Question -->
+    <div class="screen" id="questionScreen">
+        <div class="question-container">
+            <div class="penguin happy">🐧</div>
+            <div class="valentine-question">
+                Will you be my Valentine?
+            </div>
+            <div class="button-group">
+                <button class="btn btn-primary" id="btnYes">Yes! 💕</button>
+                <button class="btn btn-secondary" id="btnNo" disabled title="Only yes is allowed!">No</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Screen 6: Celebration -->
+    <div class="screen" id="celebrationScreen">
+        <div class="hearts-container" id="heartsContainer"></div>
+        <div class="confetti-container" id="confettiContainer"></div>
+        <div class="celebration-container">
+            <div class="penguin overjoyed">🐧</div>
+            <h1>Yay! 🎉</h1>
+            <p style="font-size: 1.4rem; font-weight: 600; color: var(--color-pink-dark);">
+                You've made this penguin the happiest in all of Antarctica!
+            </p>
+            <p style="margin-top: var(--spacing-lg);">
+                Happy Valentine's Day! 💖
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // ========== State Management ==========
+        const GameState = {
+            currentScreen: 'intro',
+            score: 0,
+            totalHearts: 20,
+            heartsSpawned: 0,
+            gameActive: false,
+            penguinX: 0,
+            hearts: []
+        };
+        
+        // Movement control intervals (global scope for proper cleanup)
+        let moveLeftInterval = null;
+        let moveRightInterval = null;
+        
+        // ========== Screen Management ==========
+        function showScreen(screenId) {
+            // Clear any active movement intervals when switching screens
+            if (moveLeftInterval) {
+                clearInterval(moveLeftInterval);
+                moveLeftInterval = null;
+            }
+            if (moveRightInterval) {
+                clearInterval(moveRightInterval);
+                moveRightInterval = null;
+            }
+            
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId + 'Screen').classList.add('active');
+            GameState.currentScreen = screenId;
+        }
+        
+        // ========== Snowflake Animation ==========
+        function createSnowflakes() {
+            const container = document.getElementById('snowflakes');
+            const snowflakeChars = ['❄', '❅', '❆'];
+            
+            for (let i = 0; i < 20; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                container.appendChild(snowflake);
+            }
+        }
+        
+        // ========== Countdown Logic ==========
+        function startCountdown() {
+            // FOR TESTING: Skip countdown
+            startGame();
+            return;
+            
+            /* Original countdown code - uncomment when ready to use
+            showScreen('countdown');
+            let count = 5;
+            const countdownNumber = document.getElementById('countdownNumber');
+            
+            const interval = setInterval(() => {
+                countdownNumber.textContent = count;
+                countdownNumber.style.animation = 'none';
+                setTimeout(() => {
+                    countdownNumber.style.animation = 'countdownPulse 1s ease-in-out';
+                }, 10);
+                
+                count--;
+                
+                if (count < 0) {
+                    clearInterval(interval);
+                    countdownNumber.textContent = 'GO!';
+                    setTimeout(() => {
+                        startGame();
+                    }, 1000);
+                }
+            }, 1000);
+            */
+        }
+        
+        // ========== Game Logic ==========
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let animationId;
+        
+        // Game objects
+        const penguin = {
+            width: 50,
+            height: 50,
+            x: canvas.width / 2 - 25,
+            y: canvas.height - 80,
+            speed: 8
+        };
+        
+        class Heart {
+            constructor() {
+                this.width = 30;
+                this.height = 30;
+                this.x = Math.random() * (canvas.width - this.width);
+                this.y = -this.height;
+                // Reduced speed by 30%: was 2 + Math.random() * 1
+                this.speed = 1.4 + Math.random() * 0.7;
+                this.caught = false;
+            }
+            
+            update() {
+                this.y += this.speed;
+            }
+            
+            draw() {
+                ctx.fillStyle = '#FF1493';
+                ctx.font = '30px Arial';
+                ctx.fillText('❤', this.x, this.y);
+            }
+            
+            isOffScreen() {
+                return this.y > canvas.height;
+            }
+            
+            checkCollision(penguin) {
+                return this.x < penguin.x + penguin.width &&
+                       this.x + this.width > penguin.x &&
+                       this.y < penguin.y + penguin.height &&
+                       this.y + this.height > penguin.y;
+            }
+        }
+        
+        function startGame() {
+            showScreen('game');
+            document.getElementById('gameControls').classList.add('active');
+            document.getElementById('gameCounter').classList.add('active');
+            
+            // Clear any existing movement intervals to prevent momentum bug
+            clearInterval(moveLeftInterval);
+            clearInterval(moveRightInterval);
+            moveLeftInterval = null;
+            moveRightInterval = null;
+            
+            // Reset game state completely
+            GameState.score = 0;
+            GameState.heartsSpawned = 0;
+            GameState.hearts = [];
+            GameState.gameActive = true;
+            
+            // Fully reset penguin position
+            penguin.x = canvas.width / 2 - 25;
+            penguin.y = canvas.height - 80;
+            
+            updateCounter();
+            gameLoop();
+        }
+        
+        function gameLoop() {
+            if (!GameState.gameActive) return;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw Antarctic background
+            drawBackground();
+            
+            // Spawn new hearts
+            if (GameState.heartsSpawned < GameState.totalHearts) {
+                if (Math.random() < 0.02) { // 2% chance per frame
+                    GameState.hearts.push(new Heart());
+                    GameState.heartsSpawned++;
+                }
+            }
+            
+            // Update and draw hearts
+            for (let i = GameState.hearts.length - 1; i >= 0; i--) {
+                const heart = GameState.hearts[i];
+                
+                if (!heart.caught) {
+                    heart.update();
+                    heart.draw();
+                    
+                    // Check collision with penguin
+                    if (heart.checkCollision(penguin)) {
+                        heart.caught = true;
+                        GameState.score++;
+                        updateCounter();
+                        GameState.hearts.splice(i, 1);
+                    } else if (heart.isOffScreen()) {
+                        GameState.hearts.splice(i, 1);
+                    }
+                }
+            }
+            
+            // Draw penguin
+            drawPenguin();
+            
+            // Check if game is over
+            if (GameState.heartsSpawned >= GameState.totalHearts && GameState.hearts.length === 0) {
+                endGame();
+                return;
+            }
+            
+            animationId = requestAnimationFrame(gameLoop);
+        }
+        
+        function drawBackground() {
+            // Sky gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#B4D7E8');
+            gradient.addColorStop(1, '#FFFFFF');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Snow ground
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height - 50);
+            ctx.quadraticCurveTo(canvas.width / 2, canvas.height - 70, canvas.width, canvas.height - 50);
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(0, canvas.height);
+            ctx.fill();
+        }
+        
+        function drawPenguin() {
+            ctx.font = '50px Arial';
+            ctx.fillText('🐧', penguin.x, penguin.y + penguin.height);
+        }
+        
+        function movePenguin(direction) {
+            // Only move if game is active
+            if (!GameState.gameActive) return;
+            
+            if (direction === 'left') {
+                penguin.x = Math.max(0, penguin.x - penguin.speed);
+            } else if (direction === 'right') {
+                penguin.x = Math.min(canvas.width - penguin.width, penguin.x + penguin.speed);
+            }
+        }
+        
+        function updateCounter() {
+            document.getElementById('gameCounter').textContent = `${GameState.score} / ${GameState.totalHearts}`;
+        }
+        
+        function endGame() {
+            GameState.gameActive = false;
+            cancelAnimationFrame(animationId);
+            
+            // Clear any active movement intervals
+            clearInterval(moveLeftInterval);
+            clearInterval(moveRightInterval);
+            moveLeftInterval = null;
+            moveRightInterval = null;
+            
+            document.getElementById('gameControls').classList.remove('active');
+            document.getElementById('gameCounter').classList.remove('active');
+            showResults();
+        }
+        
+        // ========== Results Logic ==========
+        function showResults() {
+            showScreen('results');
+            
+            const percentage = (GameState.score / GameState.totalHearts) * 100;
+            const resultsPenguin = document.getElementById('resultsPenguin');
+            const resultsTitle = document.getElementById('resultsTitle');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const resultsMessage = document.getElementById('resultsMessage');
+            const resultsButton = document.getElementById('resultsButton');
+            
+            scoreDisplay.textContent = `${GameState.score} / ${GameState.totalHearts}`;
+            
+            // Determine message based on score
+            if (percentage === 100) {
+                resultsPenguin.className = 'penguin happy';
+                resultsTitle.textContent = 'Perfect! 🌟';
+                resultsMessage.textContent = 'Absolutely incredible! You caught every single heart! You\'re a true champion!';
+                resultsButton.textContent = 'Continue';
+                resultsButton.className = 'btn btn-primary';
+                resultsButton.onclick = () => showScreen('question');
+            } else if (percentage >= 75) {
+                resultsPenguin.className = 'penguin happy';
+                resultsTitle.textContent = 'Well Done! 😊';
+                resultsMessage.textContent = 'Great job! You caught enough hearts to make the penguin happy!';
+                resultsButton.textContent = 'Continue';
+                resultsButton.className = 'btn btn-primary';
+                resultsButton.onclick = () => showScreen('question');
+            } else if (percentage >= 50) {
+                resultsPenguin.className = 'penguin sad';
+                resultsTitle.textContent = 'Pretty Average... 😐';
+                resultsMessage.textContent = 'Meh, that was pretty mid. You need at least 15 hearts to continue. Try again!';
+                resultsButton.textContent = 'Try Again';
+                resultsButton.className = 'btn btn-secondary';
+                resultsButton.onclick = startCountdown;
+            } else if (percentage >= 25) {
+                resultsPenguin.className = 'penguin sad';
+                resultsTitle.textContent = 'Not Great... 😞';
+                resultsMessage.textContent = 'That wasn\'t very good. You need at least 15 hearts to continue. Give it another shot!';
+                resultsButton.textContent = 'Try Again';
+                resultsButton.className = 'btn btn-secondary';
+                resultsButton.onclick = startCountdown;
+            } else {
+                resultsPenguin.className = 'penguin sad';
+                resultsTitle.textContent = 'Oh No... 😢';
+                resultsMessage.textContent = 'That was rough! You need at least 15 hearts to continue. Don\'t give up!';
+                resultsButton.textContent = 'Try Again';
+                resultsButton.className = 'btn btn-secondary';
+                resultsButton.onclick = startCountdown;
+            }
+        }
+        
+        // ========== Celebration Logic ==========
+        function startCelebration() {
+            showScreen('celebration');
+            createFloatingHearts();
+            createConfetti();
+            
+            // Play music would go here (requires audio file)
+            // const audio = new Audio('celebration.mp3');
+            // audio.play();
+        }
+        
+        function createFloatingHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartEmojis = ['❤️', '💕', '💖', '💗', '💝', '💞'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.bottom = '0';
+                heart.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 3000);
+            }, 300);
+        }
+        
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#FF1493', '#FF85B3', '#FFB6D9', '#B4D7E8', '#6CB4E8', '#4A90C7'];
+            
+            setInterval(() => {
+                for (let i = 0; i < 5; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    container.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }
+            }, 200);
+        }
+        
+        // ========== Event Listeners ==========
+        document.getElementById('btnPlay').addEventListener('click', startCountdown);
+        document.getElementById('btnYes').addEventListener('click', startCelebration);
+        
+        // ========== Game Control Event Listeners ==========
+        // Note: moveLeftInterval and moveRightInterval are declared in global scope above
+        
+        // Left button - Touch events
+        document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (moveLeftInterval) clearInterval(moveLeftInterval);
+            moveLeftInterval = setInterval(() => movePenguin('left'), 16);
+        });
+        
+        document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            clearInterval(moveLeftInterval);
+            moveLeftInterval = null;
+        });
+        
+        document.getElementById('btnLeft').addEventListener('touchcancel', (e) => {
+            e.preventDefault();
+            clearInterval(moveLeftInterval);
+            moveLeftInterval = null;
+        });
+        
+        // Right button - Touch events
+        document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (moveRightInterval) clearInterval(moveRightInterval);
+            moveRightInterval = setInterval(() => movePenguin('right'), 16);
+        });
+        
+        document.getElementById('btnRight').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            clearInterval(moveRightInterval);
+            moveRightInterval = null;
+        });
+        
+        document.getElementById('btnRight').addEventListener('touchcancel', (e) => {
+            e.preventDefault();
+            clearInterval(moveRightInterval);
+            moveRightInterval = null;
+        });
+        
+        // Left button - Mouse events for PC testing
+        document.getElementById('btnLeft').addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            if (moveLeftInterval) clearInterval(moveLeftInterval);
+            moveLeftInterval = setInterval(() => movePenguin('left'), 16);
+        });
+        
+        document.getElementById('btnLeft').addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            clearInterval(moveLeftInterval);
+            moveLeftInterval = null;
+        });
+        
+        document.getElementById('btnLeft').addEventListener('mouseleave', (e) => {
+            e.preventDefault();
+            clearInterval(moveLeftInterval);
+            moveLeftInterval = null;
+        });
+        
+        // Right button - Mouse events for PC testing
+        document.getElementById('btnRight').addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            if (moveRightInterval) clearInterval(moveRightInterval);
+            moveRightInterval = setInterval(() => movePenguin('right'), 16);
+        });
+        
+        document.getElementById('btnRight').addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            clearInterval(moveRightInterval);
+            moveRightInterval = null;
+        });
+        
+        document.getElementById('btnRight').addEventListener('mouseleave', (e) => {
+            e.preventDefault();
+            clearInterval(moveRightInterval);
+            moveRightInterval = null;
+        });
+        
+        // Global mouseup to catch any missed events
+        document.addEventListener('mouseup', () => {
+            if (moveLeftInterval) {
+                clearInterval(moveLeftInterval);
+                moveLeftInterval = null;
+            }
+            if (moveRightInterval) {
+                clearInterval(moveRightInterval);
+                moveRightInterval = null;
+            }
+        });
+        
+        // Keyboard controls for desktop testing
+        document.addEventListener('keydown', (e) => {
+            if (!GameState.gameActive) return;
+            if (e.key === 'ArrowLeft' || e.key === 'a') movePenguin('left');
+            if (e.key === 'ArrowRight' || e.key === 'd') movePenguin('right');
+        });
+        
+        // ========== Initialize ==========
+        createSnowflakes();
+    </script>
+</body>
+</html>
