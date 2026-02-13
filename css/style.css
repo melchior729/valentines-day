@@ -1,0 +1,452 @@
+/* ========== CSS Variables ========== */
+:root {
+    /* Antarctic Color Palette */
+    --color-snow: #FFFFFF;
+    --color-ice-light: #E0F7FF;
+    --color-ice-blue: #B4D7E8;
+    --color-ice-medium: #6CB4E8;
+    --color-ice-dark: #4A90C7;
+    --color-pink-light: #FFB6D9;
+    --color-pink: #FF85B3;
+    --color-pink-dark: #FF1493;
+    --color-text: #2C3E50;
+    --color-text-light: #5A6C7D;
+    
+    /* Typography */
+    --font-heading: 'Fredoka One', cursive;
+    --font-body: 'Nunito', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 48px;
+    
+    /* Transitions */
+    --transition-fast: 0.3s ease;
+    --transition-normal: 0.5s ease;
+    --transition-slow: 0.8s ease;
+}
+
+/* ========== Global Styles ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-text);
+    background: linear-gradient(180deg, #87CEEB 0%, #B4D7E8 50%, #D4E9F5 100%);
+    overflow: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Snowflake Background Animation */
+.snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.snowflake {
+    position: absolute;
+    top: -10px;
+    color: #FFFFFF;
+    font-size: 1.2em;
+    opacity: 0.8;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+/* ========== Screen Container ========== */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal), visibility var(--transition-normal);
+    z-index: 10;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ========== Content Cards ========== */
+.content-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: var(--spacing-lg);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid rgba(180, 215, 232, 0.3);
+}
+
+/* ========== Penguin Character ========== */
+.penguin {
+    width: 180px;
+    height: 180px;
+    margin-bottom: var(--spacing-md);
+    transition: transform var(--transition-normal), filter var(--transition-normal);
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.penguin img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.penguin.sad {
+    filter: grayscale(0.3) brightness(0.9);
+    animation: breathe 3s ease-in-out infinite;
+}
+
+.penguin.happy {
+    filter: brightness(1.05);
+    animation: breathe 2s ease-in-out infinite;
+}
+
+.penguin.overjoyed {
+    animation: bounce 0.6s ease-in-out infinite;
+}
+
+.penguin.angry {
+    filter: brightness(0.95) saturate(1.2);
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+.penguin.bored {
+    filter: grayscale(0.2);
+    animation: breathe 4s ease-in-out infinite;
+}
+
+.penguin.questioning {
+    animation: tilt 2s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes tilt {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+/* ========== Typography ========== */
+h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--color-pink-dark);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--color-ice-dark);
+    margin-bottom: var(--spacing-sm);
+    text-align: center;
+}
+
+p {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+    max-width: 500px;
+    line-height: 1.8;
+}
+
+/* ========== Buttons ========== */
+.btn {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 16px 48px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    margin: var(--spacing-xs);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-pink) 0%, var(--color-pink-dark) 100%);
+    color: white;
+}
+
+.btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, var(--color-ice-medium) 0%, var(--color-ice-dark) 100%);
+    color: white;
+}
+
+.btn-secondary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========== Game Controls ========== */
+.game-controls {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    z-index: 100;
+}
+
+.game-controls.active {
+    display: flex;
+}
+
+.control-btn {
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-pink-light) 0%, var(--color-pink) 100%);
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-fast);
+    user-select: none;
+}
+
+.control-btn:active {
+    transform: scale(0.9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ========== Game Canvas ========== */
+#gameCanvas {
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    max-height: 70vh;
+}
+
+.game-counter {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-pink-dark);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px 24px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    display: none;
+}
+
+.game-counter.active {
+    display: block;
+}
+
+/* ========== Countdown Screen ========== */
+.countdown-number {
+    font-family: var(--font-heading);
+    font-size: 8rem;
+    color: var(--color-pink-dark);
+    animation: countdownPulse 1s ease-in-out;
+}
+
+@keyframes countdownPulse {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ========== Results Screen ========== */
+.results-container {
+    text-align: center;
+    max-width: 500px;
+}
+
+.score-display {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-pink-dark);
+    margin: var(--spacing-md) 0;
+}
+
+.message-box {
+    background: rgba(180, 215, 232, 0.15);
+    padding: var(--spacing-md);
+    border-radius: 20px;
+    margin: var(--spacing-md) 0;
+    border: 2px solid rgba(180, 215, 232, 0.3);
+}
+
+/* ========== Question Screen ========== */
+.question-container {
+    text-align: center;
+    max-width: 500px;
+}
+
+.valentine-question {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--color-pink-dark);
+    background: linear-gradient(135deg, rgba(255, 182, 217, 0.2) 0%, rgba(255, 133, 179, 0.2) 100%);
+    padding: var(--spacing-lg);
+    border-radius: 20px;
+    margin: var(--spacing-lg) 0;
+    border: 4px solid var(--color-pink);
+}
+
+.button-group {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ========== Celebration Screen ========== */
+.celebration-container {
+    text-align: center;
+    position: relative;
+}
+
+.hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 2rem;
+    animation: floatUp 3s ease-in forwards;
+    opacity: 0;
+}
+
+@keyframes floatUp {
+    0% { 
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% { 
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--color-pink);
+    top: -10px;
+    animation: confettiFall 3s linear forwards;
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ========== Responsive Design ========== */
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    p { font-size: 1rem; }
+    .penguin { width: 150px; height: 150px; }
+    .countdown-number { font-size: 6rem; }
+    .valentine-question { font-size: 1.8rem; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 1.5rem; }
+    .penguin { width: 140px; height: 140px; }
+    .countdown-number { font-size: 4rem; }
+    .btn { 
+        font-size: 1rem;
+        padding: 14px 32px;
+        min-width: 150px;
+    }
+}
