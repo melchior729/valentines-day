@@ -29,6 +29,7 @@ penguinImages.bored.src = 'imgs/penguin-bored.png';
 // Audio management
 const gameplayMusic = document.getElementById('gameplayMusic');
 const celebrationMusic = document.getElementById('celebrationMusic');
+const collectSound = document.getElementById('collectSound');
 
 // Track penguin state on question screen
 let penguinIsAngry = false;
@@ -75,18 +76,27 @@ function startCountdown() {
     let count = 5;
     const countdownNumber = document.getElementById('countdownNumber');
     
+    // Set initial count immediately
+    countdownNumber.textContent = count;
+    countdownNumber.style.animation = 'countdownPulse 1s ease-in-out';
+    
     const interval = setInterval(() => {
-        countdownNumber.textContent = count;
-        countdownNumber.style.animation = 'none';
-        setTimeout(() => {
-            countdownNumber.style.animation = 'countdownPulse 1s ease-in-out';
-        }, 10);
-        
         count--;
         
-        if (count < 0) {
+        if (count >= 0) {
+            countdownNumber.textContent = count;
+            // Reset animation
+            countdownNumber.style.animation = 'none';
+            setTimeout(() => {
+                countdownNumber.style.animation = 'countdownPulse 1s ease-in-out';
+            }, 10);
+        } else {
             clearInterval(interval);
             countdownNumber.textContent = 'GO!';
+            countdownNumber.style.animation = 'none';
+            setTimeout(() => {
+                countdownNumber.style.animation = 'countdownPulse 1s ease-in-out';
+            }, 10);
             setTimeout(() => {
                 startGame();
             }, 1000);
@@ -98,10 +108,22 @@ function startCountdown() {
 document.addEventListener('DOMContentLoaded', () => {
     createSnowflakes();
     
-    // Start gameplay music from the very beginning
+    // Try to start gameplay music from the very beginning
     if (gameplayMusic) {
         gameplayMusic.play().catch(err => {
-            console.log('Music autoplay may require user interaction:', err);
+            console.log('Music autoplay blocked - will play on user interaction:', err);
         });
+    }
+    
+    // Also ensure music plays when Play button is clicked (fallback for autoplay block)
+    const playButton = document.getElementById('btnPlay');
+    if (playButton) {
+        playButton.addEventListener('click', () => {
+            if (gameplayMusic && gameplayMusic.paused) {
+                gameplayMusic.play().catch(err => {
+                    console.log('Music play failed:', err);
+                });
+            }
+        }, { once: false });
     }
 });

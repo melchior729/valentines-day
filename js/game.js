@@ -109,6 +109,14 @@ function gameLoop() {
                 GameState.score++;
                 updateCounter();
                 GameState.hearts.splice(i, 1);
+                
+                // Play collect sound
+                if (collectSound) {
+                    collectSound.currentTime = 0; // Reset to start for rapid collection
+                    collectSound.play().catch(err => {
+                        console.log('Collect sound play failed:', err);
+                    });
+                }
             } else if (heart.isOffScreen()) {
                 GameState.hearts.splice(i, 1);
             }

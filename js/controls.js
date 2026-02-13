@@ -118,7 +118,18 @@ document.addEventListener('keyup', (e) => {
 });
 
 // ========== Button Event Listeners ==========
-document.getElementById('btnPlay').addEventListener('click', startCountdown);
+// Play button with music start
+document.getElementById('btnPlay').addEventListener('click', () => {
+    // Ensure music plays when user clicks (browser requires user interaction)
+    if (gameplayMusic && gameplayMusic.paused) {
+        gameplayMusic.currentTime = 0;
+        gameplayMusic.play().catch(err => {
+            console.log('Music play failed:', err);
+        });
+    }
+    startCountdown();
+});
+
 document.getElementById('btnYes').addEventListener('click', startCelebration);
 
 // Play Again button - restart from beginning
