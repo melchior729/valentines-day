@@ -2,14 +2,6 @@
 
 An interactive Valentine's Day website with a cute penguin character and heart-catching game.
 
-## Author
-
-**Abhay Manoj**
-
-[My GitHub](https://github.com/melchior729)
-
-[My LinkedIn](https://linkedin.com/in/abhaymanoj729)
-
 ---
 
 ## Project Structure
@@ -107,3 +99,15 @@ Edit `js/game.js`:
 - **game.js**: Canvas rendering, collision detection, game loop
 - **results.js**: Score calculation, feedback messages, celebration effects
 - **controls.js**: Touch/mouse/keyboard event handlers
+
+---
+
+
+## Author
+
+**Abhay Manoj**
+
+[My GitHub](https://github.com/melchior729)
+
+[My LinkedIn](https://linkedin.com/in/abhaymanoj729)
+
