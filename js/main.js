@@ -82,7 +82,7 @@ function startCountdown() {
     const interval = setInterval(() => {
         count--;
         
-        if (count >= 0) {
+        if (count > 0) {
             countdownNumber.textContent = count;
             // Reset animation
             countdownNumber.style.animation = 'none';

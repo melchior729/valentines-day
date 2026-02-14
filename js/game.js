@@ -18,8 +18,8 @@ class Heart {
         this.height = 30;
         this.x = Math.random() * (canvas.width - this.width);
         this.y = -this.height;
-        // Back to original speed
-        this.speed = 2 + Math.random() * 1;
+        // Slower falling speed
+        this.speed = 1.2 + Math.random() * 0.6;
         this.caught = false;
     }
     
@@ -89,7 +89,7 @@ function gameLoop() {
     
     // Spawn new hearts
     if (GameState.heartsSpawned < GameState.totalHearts) {
-        if (Math.random() < 0.02) { // 2% chance per frame
+        if (Math.random() < 0.015) { // 1.5% chance per frame (slower spawn rate)
             GameState.hearts.push(new Heart());
             GameState.heartsSpawned++;
         }
