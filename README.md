@@ -1,4 +1,4 @@
-# Valentine's Day Penguin Game 🐧💕
+# Valentine's Day Penguin Game
 
 An interactive Valentine's Day website with a cute penguin character and heart-catching game.
 
@@ -33,14 +33,14 @@ valentines-day/
 
 ## Features
 
-- ✅ Clean modular code structure (HTML/CSS/JS separated)
-- ✅ Antarctic-themed background with falling snowflakes
-- ✅ Heart-catching canvas game with directional penguin sprites
-- ✅ Score-based progression (75%+ to win)
-- ✅ Dynamic penguin expressions based on movement and score
-- ✅ Mobile-optimized controls (right thumb area)
-- ✅ Celebration with confetti, hearts, and music
-- ✅ Responsive design for all screen sizes
+- Clean modular code structure (HTML/CSS/JS separated)
+- Antarctic-themed background with falling snowflakes
+- Heart-catching canvas game with directional penguin sprites
+- Score-based progression (75%+ to win)
+- Dynamic penguin expressions based on movement and score
+- Mobile-optimized controls (right thumb area)
+- Celebration with confetti, hearts, and music
+- Responsive design for all screen sizes
 
 ## Penguin Sprite Behavior
 
